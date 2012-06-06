@@ -1,4 +1,4 @@
-(defproject phylotastic-clj "0.1.0-SNAPSHOT"
+(defproject phylotastic/phylotastic "0.1.0-SNAPSHOT"
   :description "Phylotastic Clojure implementation."
   :repositories {"conjars" "http://conjars.org/repo/"}
   :source-path "src/clj"
