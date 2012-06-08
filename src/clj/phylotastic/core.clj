@@ -52,5 +52,5 @@
      (merge-tips ?tips :> ?tips-merged)
      (c/limit [1] ?node :> ?node-out))))
 
-(defn -main [tree-file tips-file sink-path]
+(defmain PruneTree [tree-file tips-file sink-path]
   (tips->paths tree-file tips-file sink-path))
