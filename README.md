@@ -1,6 +1,6 @@
 # About
 
-This project contains a Clojure/Cascalog implementation for querying, pruning, and grafting phylogenetic trees.
+This project contains a Clojure/Cascalog implementation for pruning phylogenetic trees. It rides on [this algorithm](https://github.com/phylotastic/tolomatic) for pre-processing trees so that they can be parallelized and pruned using MapReduce. 
 
 # Running
 
