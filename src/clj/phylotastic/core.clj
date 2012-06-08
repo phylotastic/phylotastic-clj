@@ -26,11 +26,16 @@
   [tips]
   [(vector (vec (map first tips)))])
 
+(defn merge-tips
+  [tips]
+  (vector (reduce #(str %1 "|" %2) tips)))
+
 (defn tips->paths
-  "Cascalog query that builds a taxon bipartition table "
-  [tree-path tips-path]
-  (let [tree-src (hfs-delimited tree-path :delimiter ",")
-        tips-src (hfs-delimited tips-path :delimiter ",")
+  "Cascalog query that builds a taxon bipartition table and saves it to a text file."
+  [tree-file tips-file sink-path]
+  (let [tree-src (hfs-delimited (get-path tree-file) :delimiter ",")
+        tips-src (hfs-delimited (get-path tips-file) :delimiter ",")
+        sink (hfs-delimited sink-path :delimiter "\t" :sinkmode :replace)
         tuple-src (<-
                    [?tips ?node ?tips-count]
                    (tree-src ?path-tip ?path)
@@ -39,9 +44,13 @@
                    (combine-nodes ?tip :> ?tips)
                    (count ?tips :> ?tips-count)
                    (:trap (stdout)))]
-    (??<-
-     [?tips ?node-out ?tips-count]
+    (?<- sink
+     [?tips-merged ?node-out ?tips-count]
      (tuple-src ?tips ?node ?tips-count)
      (> ?tips-count 1)
      (:sort ?node)
+     (merge-tips ?tips :> ?tips-merged)
      (c/limit [1] ?node :> ?node-out))))
+
+(defn -main [tree-file tips-file sink-path]
+  (tips->paths tree-file tips-file sink-path))
