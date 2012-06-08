@@ -12,4 +12,5 @@
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [cascalog "1.9.0-wip8"]]
   :dev-dependencies [[org.apache.hadoop/hadoop-core "0.20.2-dev"]
-                     [midje-cascalog "0.4.0"]])
+                     [midje-cascalog "0.4.0"]]
+  :aot [phylotastic.core])
