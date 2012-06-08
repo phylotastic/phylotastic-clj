@@ -33,8 +33,8 @@
 (defn tips->paths
   "Cascalog query that builds a taxon bipartition table and saves it to a text file."
   [tree-file tips-file sink-path]
-  (let [tree-src (hfs-delimited (get-path tree-file) :delimiter ",")
-        tips-src (hfs-delimited (get-path tips-file) :delimiter ",")
+  (let [tree-src (hfs-delimited tree-file :delimiter ",")
+        tips-src (hfs-delimited tips-file :delimiter ",")
         sink (hfs-delimited sink-path :delimiter "\t" :sinkmode :replace)
         tuple-src (<-
                    [?tips ?node ?tips-count]
